@@ -38,7 +38,9 @@ export const QuestionFormSchema = QuestionSchema.extend({
 export const SurveyFormSchema = SurveySchema.extend({
   id: z.number().nullish(),
   title: z.string().min(1, '必須入力です').nullable(),
-  questions: QuestionFormSchema.array().min(1, '必須入力です').nullable(),
+  questions: QuestionFormSchema.array()
+    .min(1, '質問を設定してください')
+    .nullable(),
 })
 
 export type SurveyForm = z.infer<typeof SurveyFormSchema>

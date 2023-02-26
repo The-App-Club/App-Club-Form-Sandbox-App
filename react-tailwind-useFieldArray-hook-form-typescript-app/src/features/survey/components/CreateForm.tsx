@@ -10,12 +10,21 @@ import { SurveyForm } from '@/features/survey/stores/surveyForm'
 import { SurveyFormModeAction } from '@/features/survey/stores/surveyFormMode'
 
 const CreateForm = () => {
-  const { handleSubmit, control, isValid, errors, setValue } = useSurveyForm(
-    SurveyFormModeAction.ADD
-  )
-  const { fields, handleAdd, handleDelete } = useSurveyQuestionForm({ control })
+  const {
+    handleSubmit,
+    control,
+    isValid,
+    errors,
+    setValue,
+    getFieldState,
+    setError,
+  } = useSurveyForm(SurveyFormModeAction.ADD)
 
-  console.log(errors)
+  const { fields, handleAdd, handleDelete } = useSurveyQuestionForm({
+    control,
+    setError,
+  })
+
   const onSubmit = (data: SurveyForm) => {
     console.log(data)
   }
@@ -29,6 +38,16 @@ const CreateForm = () => {
         name='title'
         control={control}
       />
+      {!!errors.questions && (
+        <p
+          className={clsx(
+            `pt-2 font-bold`,
+            !!errors.questions && clsx(`text-red-500 dark:text-white`)
+          )}
+        >
+          {!!errors.questions && errors.questions?.message}
+        </p>
+      )}
       <div className='flex flex-col items-center gap-6'>
         {fields.map((field, index) => {
           return (
@@ -47,9 +66,11 @@ const CreateForm = () => {
               />
 
               <QuestionTypeSelector
+                questionIndex={index}
                 labelName={`質問形式`}
                 name={`questions.${index}.questionType`}
                 control={control}
+                errors={errors}
               />
 
               <AnswerSelector
@@ -58,6 +79,7 @@ const CreateForm = () => {
                 name={`questions.${index}`}
                 control={control}
                 setValue={setValue}
+                setError={setError}
               />
 
               <div className='flex w-full items-center justify-end'>
@@ -99,7 +121,7 @@ const CreateForm = () => {
           `disabled:bg-gray-200`
         )}
       >
-        追加する
+        質問を追加する
       </button>
       <Spacer classValue={`h-12`} />
       <button

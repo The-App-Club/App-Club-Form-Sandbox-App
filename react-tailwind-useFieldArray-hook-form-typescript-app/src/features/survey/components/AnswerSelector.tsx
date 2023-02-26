@@ -1,6 +1,11 @@
 import { FC, useEffect } from 'react'
 
-import { UseControllerProps, UseFormSetValue, useWatch } from 'react-hook-form'
+import {
+  UseControllerProps,
+  UseFormSetError,
+  UseFormSetValue,
+  useWatch,
+} from 'react-hook-form'
 
 import {
   QuestionCategory,
@@ -14,7 +19,10 @@ import type { Merge } from 'type-fest'
 type NeatType = Merge<
   UseControllerProps<SurveyForm>,
   { labelName: string; questionIndex: number }
-> & { setValue: UseFormSetValue<SurveyForm> }
+> & {
+  setError: UseFormSetError<SurveyForm>
+  setValue: UseFormSetValue<SurveyForm>
+}
 
 const AnswerSelector: FC<NeatType> = ({
   name,
@@ -24,6 +32,7 @@ const AnswerSelector: FC<NeatType> = ({
   shouldUnregister,
   questionIndex,
   setValue,
+  setError,
 }) => {
   const { questionType, answer } = useWatch({
     control,
@@ -34,12 +43,40 @@ const AnswerSelector: FC<NeatType> = ({
     if (!questionType) {
       return
     }
+    // @ts-ignore
+    if (answer.choices.length === 0) {
+      if (questionType === QuestionCategory.SA) {
+        setError(`questions.${questionIndex}.answer.choices`, {
+          message: '選択肢は1個以上必要です',
+        })
+      } else if (questionType === QuestionCategory.MA) {
+        setError(`questions.${questionIndex}.answer.choices`, {
+          message: '選択肢は2個以上必要です',
+        })
+      } else {
+        setError(`questions.${questionIndex}.answer.choices`, {
+          message: undefined,
+        })
+      }
+    } else if (
+      // @ts-ignore
+      answer.choices.length === 1 &&
+      questionType === QuestionCategory.MA
+    ) {
+      setError(`questions.${questionIndex}.answer.choices`, {
+        message: '選択肢は2個以上必要です',
+      })
+    } else {
+      setError(`questions.${questionIndex}.answer.choices`, {
+        message: undefined,
+      })
+    }
     // question first reset
     if (questionType !== answer.questionType) {
       setValue(`questions.${questionIndex}.answer.questionType`, questionType)
       setValue(`questions.${questionIndex}.answer.choices`, [])
     }
-  }, [questionType, answer, questionIndex, setValue])
+  }, [questionType, answer, questionIndex, setValue, setError])
 
   if (questionType !== answer.questionType) {
     // question first

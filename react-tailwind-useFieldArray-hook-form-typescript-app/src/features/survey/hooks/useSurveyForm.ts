@@ -40,6 +40,8 @@ const useSurveyForm = (mode: SurveyFormModeAction) => {
     register,
     handleSubmit,
     getValues,
+    setError,
+    getFieldState,
     watch,
     control,
     reset,
@@ -49,12 +51,15 @@ const useSurveyForm = (mode: SurveyFormModeAction) => {
     defaultValues,
     resolver: zodResolver(SurveyFormSchema),
     mode: 'all',
+    criteriaMode: 'all',
   })
 
   return useMemo(() => {
     return {
       defaultValues,
       control,
+      setError,
+      getFieldState,
       watch,
       reset,
       getValues,
@@ -67,6 +72,8 @@ const useSurveyForm = (mode: SurveyFormModeAction) => {
   }, [
     defaultValues,
     control,
+    setError,
+    getFieldState,
     watch,
     reset,
     getValues,

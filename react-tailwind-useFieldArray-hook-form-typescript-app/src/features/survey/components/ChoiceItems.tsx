@@ -73,7 +73,7 @@ const ChoiceItems = ({
           `disabled:bg-gray-200`
         )}
       >
-        追加する
+        選択肢を追加する
       </button>
     </>
   )

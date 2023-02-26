@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { Control, useFieldArray } from 'react-hook-form'
+import { Control, useFieldArray, UseFormSetError } from 'react-hook-form'
 
 import {
   QuestionCategory,
@@ -9,8 +9,10 @@ import {
 
 const useSurveyQuestionForm = ({
   control,
+  setError,
 }: {
   control: Control<SurveyForm>
+  setError: UseFormSetError<SurveyForm>
 }) => {
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
@@ -29,16 +31,24 @@ const useSurveyQuestionForm = ({
           choices: [],
         },
       })
+      setError(`questions`, {
+        message: undefined,
+      })
     },
-    [append]
+    [append, setError]
   )
 
   const handleDelete = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
       e.stopPropagation()
       remove(index)
+      if (fields.length - 1 === 0) {
+        setError(`questions`, {
+          message: '質問を設定してください',
+        })
+      }
     },
-    [remove]
+    [remove, fields, setError]
   )
 
   return useMemo(() => {
