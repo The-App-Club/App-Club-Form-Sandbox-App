@@ -23,6 +23,21 @@ const Home = () => {
         Hello world!
       </h1>
       <div className={clsx(`flex items-center justify-center`)}>
+        <Link href={'/basic/create'} className={clsx(`underline`)}>
+          Basic Create Some
+        </Link>
+      </div>
+      <div className={clsx(`flex items-center justify-center`)}>
+        <Link href={'/basic/edit'} className={clsx(`underline`)}>
+          Basic Edit Some
+        </Link>
+      </div>
+      <div className={clsx(`flex items-center justify-center`)}>
+        <Link href={'/signin'} className={clsx(`underline`)}>
+          SignIn
+        </Link>
+      </div>
+      <div className={clsx(`flex items-center justify-center`)}>
         <Link href={'/sample'} className={clsx(`underline`)}>
           Sample
         </Link>

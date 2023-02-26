@@ -15,7 +15,6 @@ const TextfieldTitle = (props: NeatType) => {
     name: props.name,
     control: props.control,
   })
-  console.log(`[TextfieldTitle] ${props.name}`, error)
   return (
     <div className='w-full'>
       <label

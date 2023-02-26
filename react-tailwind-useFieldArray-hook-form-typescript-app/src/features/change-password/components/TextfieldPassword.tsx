@@ -1,9 +1,16 @@
 import clsx from 'clsx'
 import { useController, UseControllerProps } from 'react-hook-form'
 
-import { SignInForm } from '../stores/signInForm'
+import { ChangePasswordForm } from '@/features/change-password/stores/changePasswordForm'
 
-const TextfieldPassword = (props: UseControllerProps<SignInForm>) => {
+import type { Merge } from 'type-fest'
+
+type NeatType = Merge<
+  UseControllerProps<ChangePasswordForm>,
+  { labelName: string }
+>
+
+const TextfieldPassword = (props: NeatType) => {
   const {
     field,
     fieldState: { error },
@@ -14,11 +21,11 @@ const TextfieldPassword = (props: UseControllerProps<SignInForm>) => {
         htmlFor='password'
         className='mb-2 block text-lg font-medium text-gray-600 dark:text-white'
       >
-        パスワード
+        {props.labelName}
       </label>
       <input
         type='password'
-        id='password'
+        id={props.name}
         className={clsx(
           `block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-lg font-bold`,
           `focus:outline-none focus:ring-1`,

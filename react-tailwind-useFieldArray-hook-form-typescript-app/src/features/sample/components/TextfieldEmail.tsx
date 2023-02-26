@@ -8,7 +8,6 @@ const TextfieldEmail = (props: UseControllerProps<SignInForm>) => {
     field,
     fieldState: { error },
   } = useController(props)
-  console.log(`[TextfieldEmail]`, error)
   return (
     <div className='mb-6'>
       <label

@@ -16,8 +16,6 @@ const TextareaDescription = (props: NeatType) => {
     control: props.control,
   })
 
-  console.log(`[TextareaDescription] ${props.name}`, error)
-
   return (
     <div className='w-full'>
       <label
