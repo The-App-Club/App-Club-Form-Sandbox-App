@@ -7,7 +7,7 @@ import { BasicForm } from '@/features/basic/stores/basicForm'
 import { BasicFormModeAction } from '@/features/basic/stores/basicFormMode'
 
 const CreateForm = () => {
-  const { handleSubmit, control, errors } = useBasicForm(
+  const { handleSubmit, control, isValid } = useBasicForm(
     BasicFormModeAction.ADD
   )
   const onSubmit = (data: BasicForm) => {
@@ -40,7 +40,7 @@ const CreateForm = () => {
         name='phone'
         control={control}
       />
-      <NiceButton />
+      <NiceButton disabled={!isValid} />
     </form>
   )
 }
