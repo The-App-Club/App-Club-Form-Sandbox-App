@@ -36,7 +36,7 @@ const QuestionTypeSelector: FC<NeatType> = ({
     shouldUnregister,
   })
 
-  console.log(`errors`, errors)
+  console.log(`field`, field)
 
   return (
     <div className='flex flex-col items-center gap-2'>
