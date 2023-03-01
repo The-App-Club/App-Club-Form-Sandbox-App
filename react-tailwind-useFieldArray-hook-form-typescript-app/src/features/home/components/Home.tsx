@@ -23,6 +23,11 @@ const Home = () => {
         Hello world!
       </h1>
       <div className={clsx(`flex items-center justify-center`)}>
+        <Link href={'/min-max'} className={clsx(`underline`)}>
+          MinMax
+        </Link>
+      </div>
+      <div className={clsx(`flex items-center justify-center`)}>
         <Link href={'/coerce'} className={clsx(`underline`)}>
           Coerce
         </Link>
